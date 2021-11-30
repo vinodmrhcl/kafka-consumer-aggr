@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import demo.toll.domain.TollTransaction;
 import demo.toll.domain.TollTxnSummary;
-import demo.toll.kafka.TollTrasactionKafkaAggregator;
+import demo.toll.kafka.TollTxnSummaryKafkaSender;
 import demo.toll.repo.TollTransactionRepository;
 import demo.toll.util.JsonUtil;
 
@@ -20,7 +20,7 @@ public class TollTransactionServiceImpl implements TollTransactionService {
 	private TollTransactionRepository transactionRepository;
 
 	@Autowired
-	private TollTrasactionKafkaAggregator trasactionKafkaAggregator;
+	private TollTxnSummaryKafkaSender trasactionKafkaAggregator;
 
 	@Override
 	@Transactional(readOnly = true)

@@ -5,7 +5,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TollTrasactionKafkaAggregator {
+public class TollTxnSummaryKafkaSender {
 
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
