@@ -24,6 +24,9 @@ public class TollTxnSummary implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long txnSummaryId;
 	
+	private Long tollPlazaId;
+	private Long laneId;
+	
 	private String vehicleSeqNumber;
 	
 	private Date txnStartTime;

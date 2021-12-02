@@ -1,0 +1,329 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Toll Service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  "/txnSummary":
+    get:
+      description: Get All Transactions Summary
+      operationId: GetAllTransactionSummary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TollTxnSummary"
+  "/transactions/{transactionId}":
+    get:
+      description: Get a single Transaction detail
+      operationId: GetTransaction
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollTransaction"  
+  "/transactions":
+    post:
+      description: Transaction Creation Service
+      operationId: CreateTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TollTransaction"
+        required: true
+      responses:
+        "200":
+          description: User Response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollTransaction"
+    get:
+      description: Get All Transactions
+      operationId: GetAllTransactions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TollTransaction"
+    put:
+      description: Transaction Updation Service
+      operationId: UpdateTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TollTransaction"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollTransaction"
+    delete:
+      description: Transaction Deletion Service
+      operationId: DeleteTransaction
+      parameters:
+        - name: transactionId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollTransaction"
+  "/plazas/{plazaId}":
+    get:
+      description: Get a single Plaza detail
+      operationId: GetPlaza
+      parameters:
+        - name: plazaId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollPlaza"  
+  "/plazas":
+    post:
+      description: Plaza Creation Service
+      operationId: CreatePlaza
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TollPlaza"
+        required: true
+      responses:
+        "200":
+          description: "toll plaza"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollPlaza"
+    get:
+      description: Get all Plazas
+      operationId: GetAllPlazas
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TollPlaza"                
+    put:
+      description: Plaza Updation Service
+      operationId: UpdatePlaza
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TollPlaza"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollPlaza"
+    delete:
+      description: Plaza Deletion Service
+      operationId: DeletePlaza
+      parameters:
+        - name: plazaId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TollPlaza"
+    
+servers:
+  - url: //localhost:8083/
+components:
+  schemas:
+    TollTxnSummary:
+      title: TollTransactionSummary
+      type: object
+      properties:
+        tollTxnSummaryId:
+          type: integer
+          x-primary-key: true
+          format: int(10)
+        tollPlazaId:
+          type: integer
+          format: int(10)
+        laneId:
+          type: integer
+          format: int(10)
+        vehicleSeqNumber:
+          type: string
+          format: varchar(50)
+        txnCount:
+          type: integer
+          format: int(10)
+      required:
+        - tollTxnSummaryId
+        - tollPlazaId
+        - laneId
+        - txnTime
+        - vehicleSeqNumber
+    TollTransaction:
+      title: TollTransaction
+      type: object
+      properties:
+        tollTransactionId:
+          type: integer
+          x-primary-key: true
+          format: int(10)
+        tollPlazaId:
+          type: integer
+          format: int(10)
+        laneId:
+          type: integer
+          format: int(10)
+        txnTime:
+          type: integer
+          format: int(20)
+        vehicleSpeed:
+          type: integer
+          format: int(10)
+
+        vehicleSeqNumber:
+          type: string
+          format: varchar(50)
+        tagType:
+          type: string
+          format: varchar(50)
+        tagInstituion:
+          type: string
+          format: varchar(50)
+        tagNumber:
+          type: string
+          format: varchar(50)
+        tagStatus:
+          type: string
+          format: varchar(50)
+        accountStatus:
+          type: string
+          format: varchar(50)
+
+        createDTM:
+          type: string
+          format: date
+        createUserId:
+          type: string
+          format: varchar(50)
+        lastUpdtDTM:
+          type: string
+          format: date
+        lastUpdtUserId:
+          type: string
+          format: varchar(50)
+      required:
+        - tollTransactionId
+        - tollPlazaId
+        - laneId
+        - txnTime
+        - vehicleSeqNumber
+    TollPlaza:
+      title: TollPlaza
+      type: object
+      properties:
+        tollPlazaId:
+          type: integer
+          x-primary-key: true
+          format: int(10)
+        tollPlazaName:
+          type: string
+          format: varchar(200)
+        lanes:
+          type: array
+          items:
+            allOf:
+            - "$ref": "#/components/schemas/Lane"
+            - "x-foreign-ref": tollPlaza
+        createDTM:
+          type: string
+          format: date
+        createUserId:
+          type: string
+          format: varchar(50)
+        lastUpdtDTM:
+          type: string
+          format: date
+        lastUpdtUserId:
+          type: string
+          format: varchar(50)
+      required:
+        - tollPlazaId
+        - tollPlazaName
+    Lane:
+      title: Lane
+      type: object
+      properties:
+        laneId:
+          type: integer
+          x-primary-key: true
+          format: int(10)
+        laneNo:
+          type: string
+          format: varchar(200)
+        tollPlaza:
+            allOf:
+              - "$ref": "#/components/schemas/TollPlaza"
+              - "x-foreign-key": tollPlzaId  
+              - "x-back-ref": true
+        createDTM:
+          type: string
+          format: date
+        createUserId:
+          type: string
+          format: varchar(50)
+        lastUpdtDTM:
+          type: string
+          format: date
+        lastUpdtUserId:
+          type: string
+          format: varchar(50)
+      required:
+        - laneId
+        - laneNo

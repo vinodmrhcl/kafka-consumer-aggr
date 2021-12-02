@@ -220,6 +220,33 @@
 					"response": []
 				},
 				{
+					"name": "Get Top Transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host3}}/transactions?size=2&orderBy=txnTime",
+							"host": [
+								"{{host3}}"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "orderBy",
+									"value": "txnTime"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Transaction",
 					"request": {
 						"method": "POST",
@@ -241,6 +268,34 @@
 							],
 							"path": [
 								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicleSeqNumber\": \"V1\",\r\n    \"tagType\": \"T1\",\r\n    \"tagInstituion\": \"FasTag\",\r\n    \"tagNumber\": \"Tag 1\",\r\n    \"tagStatus\": \"Active\",\r\n    \"accountStatus\": \"\",\r\n    \"vehicleSpeed\": \"50\",\r\n    \"tollPlazaId\": 1,\r\n        \"laneId\": 2,\r\n    \"txnTime\" : {{$timestamp}}\r\n}"
+						},
+						"url": {
+							"raw": "{{host3}}/transactions/send",
+							"host": [
+								"{{host3}}"
+							],
+							"path": [
+								"transactions",
+								"send"
 							]
 						}
 					},
