@@ -11,10 +11,16 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
-@EnableKafka
 @Configuration
-public class TollConfig {
+@EnableKafka
+@EnableWebSecurity
+@EnableResourceServer
+public class TollConfig extends ResourceServerConfigurerAdapter {
 
 	@Bean
 	public ConsumerFactory<String, String> consumerFactory() {
@@ -32,5 +38,10 @@ public class TollConfig {
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}
-	
+
+	@Override
+	public void configure(final HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/transactions/**").authenticated();
+	}
+
 }

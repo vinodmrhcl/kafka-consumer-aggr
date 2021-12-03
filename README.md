@@ -21,11 +21,13 @@ Toll Service
 ### Vehicles
 - GET /vehicles - Get All Vehicles
 
-### Toll Transactions
+### Toll Transactions ( Secured - need OAuth2 Bearer Token)
 - POST /transactions - Create Transactions
 - GET /transactions - Get All Transactions
 - GET /transactions?size=2&orderBy=txnTime - Get Top n Transactions by txnTime
 - GET /transactions/vehicle/{seqNo} - Get transaction by Vehicle Seq No
+
+### Toll Transaction Summary 
 - GET /txnSummary - Get All Transaction Summary
 - GET /txnSummary/vehicle/{seqNo} - Get Transactions Summary by Vehicle Seq No
 
