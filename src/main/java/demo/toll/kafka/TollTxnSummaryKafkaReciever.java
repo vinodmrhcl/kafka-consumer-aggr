@@ -16,7 +16,7 @@ public class TollTxnSummaryKafkaReciever {
 	@Autowired
 	private TollTxnSummaryService txnSummaryService; 
 
-	@KafkaListener(groupId = "toll", topics = "txnSummary.create")
+	@KafkaListener(groupId = "tollstart", topics = "txnSummary.create", containerFactory="latestContainerFactory")
 	@Transactional
 	public void createTxnSummary(String txnSummaryJson) {
 		TollTxnSummary txnSummary = JsonUtil.convertJsonToObject(txnSummaryJson, TollTxnSummary.class);

@@ -23,22 +23,41 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class TollConfig extends ResourceServerConfigurerAdapter {
 
 	@Bean
-	public ConsumerFactory<String, String> consumerFactory() {
+	public ConsumerFactory<String, String> latestConsumerFactory() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 		return new DefaultKafkaConsumerFactory<>(props);
 	}
 
 	@Bean
-	public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+	public ConcurrentKafkaListenerContainerFactory<String, String> latestContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-		factory.setConsumerFactory(consumerFactory());
+		factory.setConsumerFactory(latestConsumerFactory());
 		return factory;
 	}
+	
+	@Bean
+	public ConsumerFactory<String, String> earliestConsumerFactory() {
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		return new DefaultKafkaConsumerFactory<>(props);
+	}
 
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, String> earliestContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(earliestConsumerFactory());
+		return factory;
+	}
+	
 	@Override
 	public void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/transactions/**").authenticated();
