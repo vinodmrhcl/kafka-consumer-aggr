@@ -11,12 +11,12 @@ import demo.toll.service.TollTransactionService;
 import demo.toll.util.JsonUtil;
 
 @Service
-public class TollTransactionKafkaLatestReciever {
-	
-	@Autowired
-	private TollTransactionService transactionService; 
+public class TollTransactionKafkaReciever {
 
-	@KafkaListener(groupId = "tollend", topics = "transaction.create", containerFactory="latestContainerFactory")
+	@Autowired
+	private TollTransactionService transactionService;
+
+	@KafkaListener(groupId = "tollend", topics = "transaction.create", containerFactory = "containerFactory")
 	@Transactional
 	public void createTransaction(String transactionJson) {
 		TollTransaction transaction = JsonUtil.convertJsonToObject(transactionJson, TollTransaction.class);
