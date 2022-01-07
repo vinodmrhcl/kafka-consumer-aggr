@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +28,6 @@ public class TollTransactionRestController {
 		return this.transactionService.getAll(page, size, orderBy);
 	}
 
-	@GetMapping("/vehicle/{vehicleSeqNumber}")
-	public Collection<TollTransaction> getAllByVehicleSeqNumber(String vehicleSeqNumber) {
-		return this.transactionService.getAllByVehicleSeqNumber(vehicleSeqNumber);
-	}
-
 	@PostMapping
 	public void create(@RequestBody TollTransaction transaction) {
 		this.transactionService.create(transaction);
@@ -48,7 +44,7 @@ public class TollTransactionRestController {
 	}
 
 	@GetMapping("/{id}")
-	public TollTransaction getById(Long id) {
+	public TollTransaction getById(@PathVariable(value = "id") Long id) {
 		return this.transactionService.getById(id).get();
 	}
 
@@ -58,7 +54,7 @@ public class TollTransactionRestController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(Long id) {
+	public void delete(@PathVariable(value = "id") Long id) {
 		this.transactionService.deleteById(id);
 	}
 

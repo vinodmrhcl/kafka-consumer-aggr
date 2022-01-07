@@ -12,25 +12,21 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 @Configuration
 @EnableKafka
-public class KafkaConfig extends ResourceServerConfigurerAdapter {
+public class KafkaConfig {
 
-	
-	@Value("${spring.kafka.bootstrap-servers}") 
+	@Value("${spring.kafka.bootstrap-servers}")
 	private String kafkaServer;
 
-	@Value("${spring.kafka.consumer.auto-offset-reset}") 
+	@Value("${spring.kafka.consumer.auto-offset-reset}")
 	private String kafkaOffsetReset;
 
-	
 	@Bean
 	public ConsumerFactory<String, String> consumerFactory() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "dev");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -48,7 +44,7 @@ public class KafkaConfig extends ResourceServerConfigurerAdapter {
 	@Bean
 	public ConsumerFactory<String, String> earliestConsumerFactory() {
 		Map<String, Object> props = new HashMap<>();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -61,11 +57,6 @@ public class KafkaConfig extends ResourceServerConfigurerAdapter {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(earliestConsumerFactory());
 		return factory;
-	}
-
-	@Override
-	public void configure(final HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/transactions/**").authenticated();
 	}
 
 }

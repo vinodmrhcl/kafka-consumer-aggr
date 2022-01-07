@@ -25,8 +25,7 @@ public class TollTransactionKafkaTest {
 	private TollTransactionKafkaSender sender;
 
 	@SpyBean
-//	private TollTransactionKafkaEarliestReciever receiver;
-	 private TollTransactionKafkaReciever receiver;
+	private TollTransactionKafkaReciever receiver;
 
 	@Test
 	public void test() throws Exception {

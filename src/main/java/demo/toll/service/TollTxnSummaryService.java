@@ -9,8 +9,6 @@ public interface TollTxnSummaryService {
 
 	Collection<TollTxnSummary> getAll();
 
-	Collection<TollTxnSummary> getAllByVehicleSeqNumber(String vehicleSeqNumber);
-
 	void create(TollTxnSummary txnSummary);
 
 	Optional<TollTxnSummary> getById(Long txnSummaryId);

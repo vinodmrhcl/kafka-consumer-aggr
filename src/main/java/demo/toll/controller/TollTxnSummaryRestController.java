@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,18 +27,13 @@ public class TollTxnSummaryRestController {
 		return this.txnSummaryService.getAll();
 	}
 
-	@GetMapping("/vehicle/{vehicleSeqNumber}")
-	public Collection<TollTxnSummary> getAllByVehicleSeqNumber(String vehicleSeqNumber) {
-		return this.txnSummaryService.getAllByVehicleSeqNumber(vehicleSeqNumber);
-	}
-
 	@PostMapping
 	public void create(@RequestBody TollTxnSummary txnSummary) {
 		this.txnSummaryService.create(txnSummary);
 	}
-	
+
 	@GetMapping("/{id}")
-	public TollTxnSummary getById(Long id) {
+	public TollTxnSummary getById(@PathVariable(value = "id") Long id) {
 		return this.txnSummaryService.getById(id).get();
 	}
 
@@ -46,8 +42,8 @@ public class TollTxnSummaryRestController {
 		this.txnSummaryService.update(txnSummary);
 	}
 
-	@DeleteMapping
-	public void delete(Long id) {
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable(value = "id") Long id) {
 		this.txnSummaryService.deleteById(id);
 	}
 

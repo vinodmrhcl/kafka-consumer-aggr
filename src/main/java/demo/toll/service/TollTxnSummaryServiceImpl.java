@@ -15,7 +15,7 @@ public class TollTxnSummaryServiceImpl implements TollTxnSummaryService {
 
 	@Autowired
 	private TollTxnSummaryRepository txnSummaryRepository;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public Collection<TollTxnSummary> getAll() {
@@ -23,17 +23,11 @@ public class TollTxnSummaryServiceImpl implements TollTxnSummaryService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Collection<TollTxnSummary> getAllByVehicleSeqNumber(String vehicleSeqNumber) {
-		return this.txnSummaryRepository.findAllByVehicleSeqNumber(vehicleSeqNumber);
-	}
-
-	@Override
 	@Transactional
 	public void create(TollTxnSummary txnSummary) {
 		this.txnSummaryRepository.save(txnSummary);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<TollTxnSummary> getById(Long id) {

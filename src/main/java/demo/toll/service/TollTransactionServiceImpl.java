@@ -1,6 +1,5 @@
 package demo.toll.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +24,7 @@ public class TollTransactionServiceImpl implements TollTransactionService {
 
 	@Autowired
 	private TollTransactionKafkaSender transactionKafkaSender;
-	
+
 	@Autowired
 	private TollTxnSummaryKafkaSender txnSummaryKafkaSender;
 
@@ -44,17 +43,11 @@ public class TollTransactionServiceImpl implements TollTransactionService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Collection<TollTransaction> getAllByVehicleSeqNumber(String vehicleSeqNumber) {
-		return this.transactionRepository.findAllByVehicleSeqNumber(vehicleSeqNumber);
-	}
-
-	@Override
 	@Transactional
 	public void create(TollTransaction transaction) {
 		this.transactionRepository.save(transaction);
 	}
-	
+
 	@Override
 	public void send(TollTransaction transaction) {
 		String transactionJson = JsonUtil.convertObjectToJson(transaction);

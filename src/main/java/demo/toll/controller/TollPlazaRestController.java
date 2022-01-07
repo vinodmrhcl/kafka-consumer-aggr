@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +38,7 @@ public class TollPlazaRestController {
 	}
 
 	@GetMapping("/{id}/lanes")
-	public Collection<Lane> getAllLanesbByTollPlazaId(Long id) {
+	public Collection<Lane> getLanesbByTollPlazaId(@PathVariable(value = "id") Long id) {
 		return this.laneService.getAllByTollPlazaId(id);
 	}
 
@@ -47,7 +48,7 @@ public class TollPlazaRestController {
 	}
 
 	@GetMapping("/{id}")
-	public TollPlaza getById(Long id) {
+	public TollPlaza getById(@PathVariable(value = "id") Long id) {
 		return this.plazaService.getById(id).get();
 	}
 
@@ -56,8 +57,8 @@ public class TollPlazaRestController {
 		this.plazaService.update(plaza);
 	}
 
-	@DeleteMapping
-	public void delete(Long id) {
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable(value = "id") Long id) {
 		this.plazaService.deleteById(id);
 	}
 
