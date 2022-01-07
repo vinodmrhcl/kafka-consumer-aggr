@@ -1,8 +1,8 @@
 package demo.toll.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.keyvalue.repository.KeyValueRepository;
 
 import demo.toll.domain.TollTransaction;
 
-public interface TollTransactionRepository extends JpaRepository<TollTransaction, Long> {
+public interface TollTransactionRepository extends KeyValueRepository<TollTransaction, Long> {
 }
